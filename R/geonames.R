@@ -14,6 +14,12 @@
 ##     You should have received a copy of the GNU General Public License
 ##     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+.onLoad = function(libname,pkgname){
+  ## sometimes they take this down and change it...
+  if(is.null(options()$geonamesHost)){
+    options(geonamesHost="ws.geonames.org")
+  }
+}
 
 ##
 ## useful functions
@@ -25,7 +31,7 @@ getJson=function(name,plist){
 #
   require(rjson)
   require(utils)
-  url=paste("http://ws.geonames.org/",name,"?",sep="")
+  url=paste("http://",options()$geonamesHost,"/",name,"?",sep="")
   for(p in names(plist)){
     plist[[p]]=paste(p,"=",URLencode(as.character(plist[[p]])),sep="")
   }
@@ -47,13 +53,19 @@ gnDataFrame=function(name,params,ename){
 # return a data frame constructed from a JSON call
 # 
 
-  return(gnRaggedDataFrame(name,params,ename))
 ###
 ### this code tried to be more efficient but each column was a list.
 ### eventually I'll figure out a better way to construct a data frame, until then
 ### i'll just use the ragged version.
 #  json = getJson(name,params)
 #  return(as.data.frame(do.call("rbind",json[[ename]])))
+
+### another poss is:  do.call("rbind",lapply(l,data.frame))
+### but it errors if the data frame is ragged. We could test for this and
+### use gnRaggedDataFrame if it fails
+  
+  return(gnRaggedDataFrame(name,params,ename))
+
 }
 
 gnRaggedDataFrame=function(name,params,ename){
@@ -83,21 +95,22 @@ gnRaggedDataFrame=function(name,params,ename){
 ## admin hierarchy structures
 ## 
 
-GNchildren=function(geonameId){
-  return(gnDataFrame("childrenJSON",list(geonameId=geonameId),"geonames"))
+GNchildren=function(geonameId,...){
+# allows name, lang, others?
+  return(gnDataFrame("childrenJSON",list(geonameId=geonameId,...),"geonames"))
 }
 
-GNhierarchy=function(...){
-  return(gnRaggedDataFrame("hierarchyJSON",list(...),"geonames"))
+GNhierarchy=function(geonameId,...){
+  return(gnRaggedDataFrame("hierarchyJSON",list(geonameId=geonameId,...),"geonames"))
 }
 
-GNsiblings=function(geonameId){
-  return(gnDataFrame("siblingsJSON",list(geonameId=geonameId),"geonames"))
+GNsiblings=function(geonameId,...){
+  return(gnDataFrame("siblingsJSON",list(geonameId=geonameId,...),"geonames"))
 }
 
-GNneighbours=function(geonameId){
+GNneighbours=function(geonameId,...){
 # works for countries only
-  return(gnDataFrame("neighboursJSON",list(geonameId=geonameId),"geonames"))
+  return(gnDataFrame("neighboursJSON",list(geonameId=geonameId,...),"geonames"))
 }
 
 GNcountrySubdivision=function(lat,lng,lang="en",radius="",maxRows=10){

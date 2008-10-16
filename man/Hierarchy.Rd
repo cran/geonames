@@ -13,10 +13,10 @@
 }
 
 \usage{
-GNchildren(geonameId)
-GNhierarchy(...)
-GNsiblings(geonameId)
-GNneighbours(geonameId)
+GNchildren(geonameId,...)
+GNhierarchy(geonameId,...)
+GNsiblings(geonameId,...)
+GNneighbours(geonameId,...)
 GNcountrySubdivision(lat,lng,lang,radius,maxRows)
 }
 
