@@ -27,6 +27,10 @@ GNfindNearbyWikipedia(postalcode=8775,country="CH",radius=10)
 GNwikipediaBoundingBox(north=44.1,south=-9.9,east=-22.4,west=55.2)
 
 GNtimezone(57.01,-2)
+GNtimezone(lat=0,lng=-40)
+
+# new radius functionality
+GNtimezone(lat=0,lng=-40, radius=200)
 
 GNfindNearbyPostalCodes(lat=47,lng=9)
 GNpostalCodeSearch(postalcode=90210,country="FI")
@@ -40,3 +44,6 @@ GNneighbours(3041565)
 
 GNneighbourhood(40.7834,-73.96625)
 GNpostalCodeCountryInfo()
+
+# this caused warnings with the timezone being a list:
+GNfindNearbyPlaceName(52,-128,300, "30","FULL") 
