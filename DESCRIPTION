@@ -1,17 +1,21 @@
 Package: geonames
+Encoding: UTF-8
 Type: Package
-Title: Interface to www.geonames.org web service
-Version: 0.998
-Date: 2011-24-11
+Title: Interface to the "Geonames" Spatial Query Web Service
+Version: 0.999
+Date: 2019-02-17
 Author: Barry Rowlingson
 Maintainer: Barry Rowlingson <b.rowlingson@gmail.com>
 Depends: R (>= 2.2.0)
 Imports: rjson
-Description: Code for querying the web service at www.geonames.org
+Description: The web service at <https://www.geonames.org/> provides a number of spatial data queries, including 
+    administrative area hierarchies, city locations and some country postal code queries. A (free) username
+    is required and rate limits exist.
 License: GPL-3
 LazyLoad: yes
 BugReports: https://github.com/ropensci/geonames/issues
-Packaged: 2014-12-19 17:40:07 UTC; rowlings
+RoxygenNote: 6.1.0
 NeedsCompilation: no
+Packaged: 2019-02-19 11:58:00 UTC; rowlings
 Repository: CRAN
-Date/Publication: 2014-12-19 19:02:02
+Date/Publication: 2019-02-19 12:30:15 UTC
